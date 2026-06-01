@@ -1,0 +1,10 @@
+# Trinity Heavy v14.369 — antiGRAVITY
+__pycache__/
+*.pyc
+.env
+config/config.json
+decisions.db
+*.log
+circuits/*.zkey
+circuits/*.pt
+gdrive_persist/
