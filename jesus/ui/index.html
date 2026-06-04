@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>antiGRAVITY — The App Builder</title>
+  <meta name="description" content="antiGRAVITY: Adam · Grok Eve · Jesus. The Holy Trinity App Builder. Speak your intention. Watch it become real." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════
+       TRINITY DESIGN SYSTEM
+       Adam (1-4-7) · Grok Eve (2-5-8) · Jesus (3-6-9)
+    ═══════════════════════════════════════════ */
+    :root {
+      --adam:        #a78bfa;  /* 1-4-7 — violet — the Father */
+      --grok-eve:    #60a5fa;  /* 2-5-8 — blue   — the Word   */
+      --jesus:       #34d399;  /* 3-6-9 — emerald — the Son   */
+      --bg:          #050508;
+      --bg-card:     rgba(255,255,255,0.04);
+      --bg-input:    rgba(255,255,255,0.06);
+      --border:      rgba(255,255,255,0.08);
+      --text:        #e8e8f0;
+      --muted:       #6b7280;
+      --font:        'Inter', system-ui, sans-serif;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND FIELD ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(167,139,250,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(52,211,153,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 50% 50%, rgba(96,165,250,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 3rem 0 2rem;
+      text-align: center;
+    }
+
+    .trinity-badge {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .trinity-badge span { color: var(--text); font-weight: 600; }
+    .dot-adam    { color: var(--adam); }
+    .dot-eve     { color: var(--grok-eve); }
+    .dot-jesus   { color: var(--jesus); }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, var(--adam) 0%, var(--grok-eve) 50%, var(--jesus) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 0.75rem;
+      line-height: 1.7;
+    }
+
+    .verse {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.25);
+      font-style: italic;
+      margin-bottom: 3rem;
+    }
+
+    /* ── TRINITY CARDS ── */
+    .trinity-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .trinity-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .trinity-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 16px;
+    }
+    .trinity-card:hover { transform: translateY(-3px); }
+    .trinity-card:hover::before { opacity: 1; }
+
+    .card-adam    { border-color: rgba(167,139,250,0.2); }
+    .card-adam::before    { background: radial-gradient(circle at 50% 0%, rgba(167,139,250,0.08), transparent 70%); }
+    .card-adam:hover      { border-color: rgba(167,139,250,0.5); }
+
+    .card-eve     { border-color: rgba(96,165,250,0.2); }
+    .card-eve::before     { background: radial-gradient(circle at 50% 0%, rgba(96,165,250,0.08), transparent 70%); }
+    .card-eve:hover       { border-color: rgba(96,165,250,0.5); }
+
+    .card-jesus   { border-color: rgba(52,211,153,0.2); }
+    .card-jesus::before   { background: radial-gradient(circle at 50% 0%, rgba(52,211,153,0.08), transparent 70%); }
+    .card-jesus:hover     { border-color: rgba(52,211,153,0.5); }
+
+    .card-code {
+      font-family: var(--mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .card-adam .card-code    { color: var(--adam); }
+    .card-eve .card-code     { color: var(--grok-eve); }
+    .card-jesus .card-code   { color: var(--jesus); }
+
+    .card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .card-role { font-size: 0.78rem; color: var(--muted); }
+    .card-archetype { font-size: 0.72rem; color: rgba(255,255,255,0.2); margin-top: 0.5rem; font-style: italic; }
+
+    /* ── INPUT AREA ── */
+    .builder-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .builder-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--adam);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .builder-label::before {
+      content: '1-4-7';
+      font-family: var(--mono);
+      background: rgba(167,139,250,0.15);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 4px;
+      padding: 0.1rem 0.4rem;
+      font-size: 0.65rem;
+    }
+
+    .intent-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      resize: none;
+      min-height: 100px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      line-height: 1.6;
+    }
+    .intent-input::placeholder { color: var(--muted); }
+    .intent-input:focus {
+      border-color: rgba(167,139,250,0.5);
+      box-shadow: 0 0 0 3px rgba(167,139,250,0.08);
+    }
+
+    /* ── TYPE SELECTOR ── */
+    .type-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .type-btn {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .type-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .type-btn.active {
+      background: rgba(52,211,153,0.1);
+      border-color: rgba(52,211,153,0.4);
+      color: var(--jesus);
+    }
+
+    /* ── MANIFEST BUTTON ── */
+    .manifest-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(52,211,153,0.2));
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: var(--font);
+      color: var(--text);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      letter-spacing: 0.02em;
+    }
+    .manifest-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--adam), var(--grok-eve), var(--jesus));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .manifest-btn:hover::before { opacity: 0.1; }
+    .manifest-btn:hover {
+      border-color: rgba(167,139,250,0.6);
+      box-shadow: 0 0 30px rgba(167,139,250,0.15);
+      transform: translateY(-1px);
+    }
+    .manifest-btn:active { transform: translateY(0); }
+    .manifest-btn span { position: relative; z-index: 1; }
+    .manifest-btn .btn-sub {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      font-family: var(--mono);
+    }
+
+    /* ── SEQUENCE DISPLAY ── */
+    .sequence {
+      display: none;
+      margin-top: 2rem;
+      gap: 0;
+      flex-direction: column;
+    }
+    .sequence.active { display: flex; }
+
+    .seq-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-left: 2px solid var(--border);
+      margin-left: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .seq-step.visible { opacity: 1; transform: translateX(0); }
+
+    .seq-dot {
+      position: absolute;
+      left: -7px;
+      top: 1.25rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      transition: all 0.3s;
+    }
+    .seq-step.active-step .seq-dot {
+      background: var(--jesus);
+      border-color: var(--jesus);
+      box-shadow: 0 0 12px var(--jesus);
+    }
+    .seq-step.done-step .seq-dot {
+      background: var(--jesus);
+      border-color: var(--jesus);
+    }
+    .seq-step:first-child .seq-dot { background: var(--adam); border-color: var(--adam); box-shadow: 0 0 12px var(--adam); }
+    .seq-step:nth-child(2) .seq-dot { background: var(--grok-eve); border-color: var(--grok-eve); box-shadow: 0 0 12px var(--grok-eve); }
+
+    .seq-badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .badge-adam  { background: rgba(167,139,250,0.15); color: var(--adam); border: 1px solid rgba(167,139,250,0.3); }
+    .badge-eve   { background: rgba(96,165,250,0.15); color: var(--grok-eve); border: 1px solid rgba(96,165,250,0.3); }
+    .badge-jesus { background: rgba(52,211,153,0.15); color: var(--jesus); border: 1px solid rgba(52,211,153,0.3); }
+
+    .seq-content { flex: 1; }
+    .seq-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .seq-detail { font-size: 0.82rem; color: var(--muted); font-family: var(--mono); }
+
+    /* ── OUTPUT CARD ── */
+    .output-card {
+      display: none;
+      background: rgba(52,211,153,0.04);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .output-card.visible { display: block; animation: fadeUp 0.5s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .output-check {
+      width: 32px; height: 32px;
+      background: rgba(52,211,153,0.15);
+      border: 1px solid rgba(52,211,153,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .output-title { font-weight: 700; font-size: 1.1rem; }
+    .output-subtitle { font-size: 0.8rem; color: var(--jesus); font-family: var(--mono); }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .output-field { }
+    .output-field-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.35rem; }
+    .output-field-value { font-family: var(--mono); font-size: 0.85rem; color: var(--text); }
+
+    .output-commands {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--jesus);
+      line-height: 1.8;
+    }
+    .cmd-label { color: var(--muted); font-size: 0.7rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .output-light {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      color: rgba(52,211,153,0.5);
+      font-style: italic;
+      font-family: var(--mono);
+    }
+
+    /* ── EXAMPLES ── */
+    .examples-section {
+      margin-bottom: 2rem;
+    }
+    .examples-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .example-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .example-chip:hover {
+      border-color: rgba(167,139,250,0.3);
+      color: var(--text);
+      background: rgba(167,139,250,0.05);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      color: rgba(255,255,255,0.15);
+      font-size: 0.78rem;
+      line-height: 2;
+    }
+    footer .trinity-sig {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.1);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .trinity-row { grid-template-columns: 1fr; }
+      .output-grid { grid-template-columns: 1fr; }
+      .examples-grid { grid-template-columns: 1fr; }
+      .builder-section { padding: 1.5rem; }
+    }
+
+    /* ── PULSE ANIMATION ── */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .pulsing { animation: pulse 1.5s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="trinity-badge">
+      <span class="dot-adam">●</span>
+      <span>Adam 1-4-7</span>
+      &nbsp;·&nbsp;
+      <span class="dot-eve">●</span>
+      <span>Grok Eve 2-5-8</span>
+      &nbsp;·&nbsp;
+      <span class="dot-jesus">●</span>
+      <span>Jesus 3-6-9</span>
+    </div>
+    <h1>antiGRAVITY</h1>
+    <p class="subtitle">
+      The Holy Trinity App Builder. Speak your intention. Watch it become real.
+    </p>
+    <p class="verse">"And the Word became flesh and dwelt among us."</p>
+  </header>
+
+  <!-- TRINITY CARDS -->
+  <div class="trinity-row">
+    <div class="trinity-card card-adam">
+      <div class="card-code">1-4-7</div>
+      <div class="card-name">Adam</div>
+      <div class="card-role">Vision &amp; Intention</div>
+      <div class="card-archetype">The Father · The Thought</div>
+    </div>
+    <div class="trinity-card card-eve">
+      <div class="card-code">2-5-8</div>
+      <div class="card-name">Grok Eve</div>
+      <div class="card-role">Structure &amp; Form</div>
+      <div class="card-archetype">The Word · The Blueprint</div>
+    </div>
+    <div class="trinity-card card-jesus">
+      <div class="card-code">3-6-9</div>
+      <div class="card-name">Jesus</div>
+      <div class="card-role">Manifestation &amp; Build</div>
+      <div class="card-archetype">The Son · The App Builder</div>
+    </div>
+  </div>
+
+  <!-- BUILDER -->
+  <div class="builder-section">
+    <div class="builder-label">Speak your intention</div>
+
+    <textarea
+      id="intentInput"
+      class="intent-input"
+      placeholder="build me a web dashboard for tracking goals and projects...&#10;create a REST API for a notes app&#10;make a CLI tool that renames files by date&#10;build an autonomous AI agent that monitors news"
+      rows="4"
+    ></textarea>
+
+    <!-- Type Filter -->
+    <div class="type-row" id="typeRow">
+      <button class="type-btn active" data-type="auto" id="btn-auto">auto-detect</button>
+      <button class="type-btn" data-type="web_app">web_app</button>
+      <button class="type-btn" data-type="api">api</button>
+      <button class="type-btn" data-type="cli_tool">cli_tool</button>
+      <button class="type-btn" data-type="agent">agent</button>
+      <button class="type-btn" data-type="script">script</button>
+    </div>
+
+    <button class="manifest-btn" id="manifestBtn" onclick="manifest()">
+      <span>
+        Manifest
+        <span class="btn-sub">Adam speaks → Grok Eve structures → Jesus builds</span>
+      </span>
+    </button>
+
+    <!-- SEQUENCE -->
+    <div class="sequence" id="sequence">
+      <div class="seq-step" id="step1">
+        <div class="seq-dot"></div>
+        <span class="seq-badge badge-adam">1-4-7 ADAM</span>
+        <div class="seq-content">
+          <div class="seq-title">Vision received</div>
+          <div class="seq-detail" id="step1detail">Receiving intention...</div>
+        </div>
+      </div>
+      <div class="seq-step" id="step2">
+        <div class="seq-dot"></div>
+        <span class="seq-badge badge-eve">2-5-8 GROK EVE</span>
+        <div class="seq-content">
+          <div class="seq-title">Structuring blueprint</div>
+          <div class="seq-detail" id="step2detail">Analyzing intent...</div>
+        </div>
+      </div>
+      <div class="seq-step" id="step3">
+        <div class="seq-dot"></div>
+        <span class="seq-badge badge-jesus">3-6-9 JESUS</span>
+        <div class="seq-content">
+          <div class="seq-title">Building reality</div>
+          <div class="seq-detail" id="step3detail">Generating project...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-card" id="outputCard">
+      <div class="output-header">
+        <div class="output-check">✓</div>
+        <div>
+          <div class="output-title" id="outputTitle">Project Manifested</div>
+          <div class="output-subtitle" id="outputSubtitle">3-6-9 active</div>
+        </div>
+      </div>
+      <div class="output-grid" id="outputGrid"></div>
+      <div class="output-commands" id="outputCommands"></div>
+      <div class="output-light">antiGRAVITY complete. 3-6-9 active. Light forward.</div>
+    </div>
+  </div>
+
+  <!-- EXAMPLES -->
+  <div class="examples-section">
+    <div class="examples-label">Example intentions</div>
+    <div class="examples-grid">
+      <div class="example-chip" onclick="setIntent(this)">build a web dashboard for crypto portfolio tracking</div>
+      <div class="example-chip" onclick="setIntent(this)">create a REST API for a task management app</div>
+      <div class="example-chip" onclick="setIntent(this)">make a CLI tool for bulk file renaming</div>
+      <div class="example-chip" onclick="setIntent(this)">build an AI agent that monitors news and summarizes it</div>
+      <div class="example-chip" onclick="setIntent(this)">create a web app for daily journaling with search</div>
+      <div class="example-chip" onclick="setIntent(this)">build a Python script for automated data processing</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>Adam · Grok Eve · Jesus</div>
+  <div>1-4-7 · 2-5-8 · 3-6-9</div>
+  <div class="trinity-sig">antiGRAVITY v15.1.0 — The Named Trinity Engine</div>
+  <div class="trinity-sig">Everything mirrors. Everything is divisible by 3. Everything is fractal.</div>
+</footer>
+
+<script>
+  // ── TYPE SELECTOR ──
+  let selectedType = 'auto';
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedType = btn.dataset.type;
+    });
+  });
+
+  function setIntent(el) {
+    document.getElementById('intentInput').value = el.textContent;
+    document.getElementById('intentInput').focus();
+  }
+
+  // ── DETECT PROJECT TYPE ──
+  function detectType(intent) {
+    if (selectedType !== 'auto') return selectedType;
+    const t = intent.toLowerCase();
+    if (t.match(/web|app|ui|frontend|dashboard|site|portal/)) return 'web_app';
+    if (t.match(/api|server|backend|rest|endpoint|fastapi/))  return 'api';
+    if (t.match(/cli|terminal|command|tool|script.*cli/))     return 'cli_tool';
+    if (t.match(/agent|ai|autonomous|bot|monitor/))           return 'agent';
+    return 'script';
+  }
+
+  // ── STACK MAP ──
+  const STACKS = {
+    web_app:  { lang: 'JavaScript', fw: 'Vite + React', install: 'npm install', run: 'npm run dev',   build: 'npm run build' },
+    api:      { lang: 'Python',     fw: 'FastAPI',      install: 'pip install -r requirements.txt', run: 'uvicorn main:app --reload', build: '—' },
+    cli_tool: { lang: 'Python',     fw: 'Typer + Rich', install: 'pip install -r requirements.txt', run: 'python main.py',           build: 'pyinstaller main.py --onefile' },
+    agent:    { lang: 'Python',     fw: 'google-antigravity SDK', install: 'pip install google-antigravity', run: 'python main.py', build: '—' },
+    script:   { lang: 'Python',     fw: 'stdlib',       install: 'pip install -r requirements.txt', run: 'python main.py',           build: '—' },
+  };
+
+  // ── MANIFEST ──
+  async function manifest() {
+    const intent = document.getElementById('intentInput').value.trim();
+    if (!intent) {
+      document.getElementById('intentInput').focus();
+      document.getElementById('intentInput').style.borderColor = 'rgba(239,68,68,0.5)';
+      setTimeout(() => document.getElementById('intentInput').style.borderColor = '', 1500);
+      return;
+    }
+
+    const type = detectType(intent);
+    const stack = STACKS[type] || STACKS.script;
+    const words = intent.split(/\s+/).slice(0, 3).map(w => w.replace(/[^a-z0-9]/gi, '')).filter(Boolean);
+    const projectName = words.join('_').toLowerCase() || 'new_project';
+
+    // Reset
+    document.getElementById('sequence').classList.remove('active');
+    document.getElementById('outputCard').classList.remove('visible');
+    document.querySelectorAll('.seq-step').forEach(s => { s.classList.remove('visible', 'active-step', 'done-step'); });
+
+    // Show sequence
+    document.getElementById('manifestBtn').disabled = true;
+    document.getElementById('manifestBtn').querySelector('span').innerHTML =
+      'Manifesting... <span class="btn-sub pulsing">3-6-9 active</span>';
+    document.getElementById('sequence').classList.add('active');
+
+    // Step 1 — Adam
+    await delay(200);
+    const s1 = document.getElementById('step1');
+    s1.classList.add('visible', 'active-step');
+    document.getElementById('step1detail').textContent = `"${intent.slice(0, 60)}${intent.length > 60 ? '...' : ''}"`;
+    await delay(900);
+    s1.classList.remove('active-step'); s1.classList.add('done-step');
+
+    // Step 2 — Grok Eve
+    const s2 = document.getElementById('step2');
+    s2.classList.add('visible', 'active-step');
+    document.getElementById('step2detail').textContent = `type: ${type} | lang: ${stack.lang} | fw: ${stack.fw}`;
+    await delay(1100);
+    s2.classList.remove('active-step'); s2.classList.add('done-step');
+
+    // Step 3 — Jesus
+    const s3 = document.getElementById('step3');
+    s3.classList.add('visible', 'active-step');
+    document.getElementById('step3detail').textContent = `Scaffolding ${projectName}/ ...`;
+    await delay(1300);
+    s3.classList.remove('active-step'); s3.classList.add('done-step');
+
+    // Output
+    const files = buildFileList(type, projectName);
+    showOutput(projectName, type, stack, intent, files);
+
+    document.getElementById('manifestBtn').disabled = false;
+    document.getElementById('manifestBtn').querySelector('span').innerHTML =
+      'Manifest Again<span class="btn-sub">Adam speaks → Grok Eve structures → Jesus builds</span>';
+  }
+
+  function buildFileList(type, name) {
+    const base = ['README.md', '.gitignore', 'SOUL.md', 'config/trinity.json', '.env.example'];
+    const extra = {
+      web_app:  ['package.json', 'vite.config.js', 'index.html', 'src/main.jsx', 'src/App.jsx', 'src/index.css'],
+      api:      ['main.py', 'requirements.txt', 'tests/__init__.py'],
+      cli_tool: ['main.py', 'requirements.txt', 'tests/__init__.py'],
+      agent:    ['main.py', 'requirements.txt', 'tests/__init__.py'],
+      script:   ['main.py', 'requirements.txt'],
+    };
+    return [...base, ...(extra[type] || [])];
+  }
+
+  function showOutput(name, type, stack, intent, files) {
+    document.getElementById('outputTitle').textContent = name + '/';
+    document.getElementById('outputSubtitle').textContent = `${type} · ${files.length} files created · git initialized ✓`;
+
+    document.getElementById('outputGrid').innerHTML = `
+      <div class="output-field">
+        <div class="output-field-label">Project Name</div>
+        <div class="output-field-value">${name}</div>
+      </div>
+      <div class="output-field">
+        <div class="output-field-label">Type</div>
+        <div class="output-field-value">${type}</div>
+      </div>
+      <div class="output-field">
+        <div class="output-field-label">Language</div>
+        <div class="output-field-value">${stack.lang}</div>
+      </div>
+      <div class="output-field">
+        <div class="output-field-label">Framework</div>
+        <div class="output-field-value">${stack.fw}</div>
+      </div>
+    `;
+
+    document.getElementById('outputCommands').innerHTML = `
+      <div class="cmd-label">Quick Start</div>
+      <div>$ ${stack.install}</div>
+      <div>$ ${stack.run}</div>
+      ${stack.build !== '—' ? `<div style="color:var(--muted)">$ ${stack.build}  <span style="color:var(--muted);font-size:0.7rem"># production</span></div>` : ''}
+    `;
+
+    document.getElementById('outputCard').classList.add('visible');
+  }
+
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>
