@@ -1,0 +1,21 @@
+# antiGRAVITY — Holy Trinity App Builder
+# Requirements
+
+# Core (always present)
+# No external deps needed for the core engine
+
+# CLI enhancement (optional — for richer output)
+rich>=13.0.0
+typer>=0.9.0
+
+# API projects will use:
+# fastapi>=0.110.0
+# uvicorn>=0.27.0
+# pydantic>=2.0.0
+
+# Web app projects use:
+# npm / vite / react (installed automatically via npm)
+
+# Agent projects use:
+# crewai>=0.1.0
+# langchain>=0.1.0
