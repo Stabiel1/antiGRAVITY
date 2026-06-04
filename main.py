@@ -124,6 +124,19 @@ def main():
         result = trinity.create(intent)
         print_result(result)
 
+    elif args[0] == "mcp" and len(args) > 1 and args[1] == "status":
+        from jesus.mcp_registry import get_mcp_status
+        mcp_stats = get_mcp_status()
+        print(BANNER)
+        print("  [MCP] The 9 Holy Connectors Status:")
+        for name, state in mcp_stats.items():
+            color = "[green]" if state == "ACTIVE" else "[red]"
+            # Using rich for colors if installed, else just print plain
+            # We'll stick to plain text here for simplicity, or rely on ANSI if we wanted.
+            state_disp = f"ACTIVE   ✓" if state == "ACTIVE" else f"INACTIVE ✗"
+            print(f"    {name.ljust(15)} : {state_disp}")
+        print("\n  Update your .env file to activate dormant connectors.\n")
+
     elif args[0] == "status":
         s = trinity.status()
         print(json.dumps(s, indent=2))
@@ -134,6 +147,7 @@ def main():
         print("    python main.py                          — interactive mode")
         print("    python main.py create <your intention>  — build a project")
         print("    python main.py status                   — check Trinity status")
+        print("    python main.py mcp status               — check MCP connectors")
         print("    python main.py interactive              — interactive mode")
         print()
         print("  Safeword: 'red' to close the circle.\n")

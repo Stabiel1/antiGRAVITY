@@ -419,6 +419,34 @@ class Jesus:
             # Paths
             OUTPUT_DIR=./manifested
             CONFIG_DIR=./config
+
+            # ─────────────────────────────────────────────
+            # The 9 Holy Connectors (MCP Servers)
+            # ─────────────────────────────────────────────
+            # 1. GitHub
+            GITHUB_PERSONAL_ACCESS_TOKEN=
+            
+            # 2. Google Drive
+            GDRIVE_CREDENTIALS=
+            
+            # 3. Google Cloud
+            GOOGLE_CLOUD_PROJECT=
+            
+            # 4. Filesystem
+            MCP_FS_PATH=./manifested
+            
+            # 5. Memory (No keys needed)
+            
+            # 6. SQLite
+            MCP_SQLITE_PATH=./data/sqlite.db
+            
+            # 7. Puppeteer (No keys needed)
+            
+            # 8. Brave Search
+            BRAVE_API_KEY=
+            
+            # 9. Slack
+            SLACK_BOT_TOKEN=
         """)
         (d / ".env.example").write_text(env_example)
 
