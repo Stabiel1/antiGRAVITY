@@ -1,0 +1,17 @@
+# antiGRAVITY v15.1.0 — Holy Trinity App Builder
+# Requirements for the Builder Engine itself
+
+# Core CLI
+rich>=13.0.0
+typer>=0.9.0
+
+# Web server (holographic app / UI serving)
+flask>=3.0.0
+
+# API project scaffolding uses these (also installed in generated projects):
+fastapi>=0.110.0
+uvicorn>=0.27.0
+pydantic>=2.0.0
+
+# Note: Generated agent projects install crewai, langchain, openai
+# via their own requirements.txt. They are NOT needed for the builder.

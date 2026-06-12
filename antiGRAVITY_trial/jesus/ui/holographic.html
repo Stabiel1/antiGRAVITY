@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>antiGRAVITY — Holographic Niner Swarm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --adam: #a78bfa;   /* 1-4-7 Violet */
+      --eve: #60a5fa;    /* 2-5-8 Blue */
+      --jesus: #34d399;  /* 3-6-9 Emerald */
+      --support: #fbbf24; /* Yellow/Gold */
+      --future: #9ca3af;  /* Gray */
+      --bg: #050508;
+      --panel: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.1);
+      --font: 'Inter', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: #e8e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background light */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 15% 15%, rgba(167,139,250,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(52,211,153,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(96,165,250,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      z-index: 10;
+      position: relative;
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--adam), var(--eve), var(--jesus));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Standard Input Section */
+    .input-section {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 2rem;
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.5s ease;
+    }
+
+    textarea {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      color: white;
+      font-family: var(--font);
+      resize: none;
+      height: 100px;
+      outline: none;
+    }
+    textarea:focus { border-color: var(--eve); }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .manifest-btn {
+      background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(52,211,153,0.2));
+      border: 1px solid rgba(167,139,250,0.4);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .manifest-btn:hover {
+      box-shadow: 0 0 15px rgba(167,139,250,0.3);
+      border-color: var(--adam);
+    }
+
+    .expert-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #9ca3af;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+    .expert-toggle:hover { color: white; border-color: white; }
+    .expert-toggle.active { background: rgba(255,255,255,0.1); color: white; border-color: var(--support); box-shadow: 0 0 10px rgba(251,191,36,0.2); }
+
+    /* Holographic 3D Scene */
+    .scene {
+      perspective: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      overflow: hidden;
+      margin-top: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+      height: 0;
+    }
+
+    .scene.visible {
+      opacity: 1;
+      pointer-events: all;
+      height: 500px;
+    }
+
+    .swarm-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      transform-style: preserve-3d;
+      transform: rotateX(20deg) rotateY(0deg);
+      transition: transform 0.1s;
+    }
+
+    .node {
+      width: 140px;
+      height: 100px;
+      background: rgba(10, 10, 15, 0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: all 0.4s ease;
+      transform: translateZ(0px);
+    }
+
+    .node-header {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.2rem;
+    }
+
+    .node-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* Core Trinity Nodes */
+    #node-1 { border-color: rgba(167,139,250,0.3); }
+    #node-1 .node-title { color: var(--adam); }
+    #node-2 { border-color: rgba(96,165,250,0.3); transform: translateZ(-20px); }
+    #node-2 .node-title { color: var(--eve); }
+    #node-3 { border-color: rgba(52,211,153,0.3); transform: translateZ(-40px); }
+    #node-3 .node-title { color: var(--jesus); }
+
+    /* Support Nodes */
+    #node-4, #node-7, #node-8 { border-color: rgba(251,191,36,0.2); transform: translateZ(-60px); }
+    #node-4 .node-title, #node-7 .node-title, #node-8 .node-title { color: var(--support); }
+
+    /* Future/Connectors Nodes */
+    #node-5, #node-6, #node-9 { border-color: rgba(156,163,175,0.2); transform: translateZ(-80px); opacity: 0.6; }
+    #node-5 .node-title, #node-6 .node-title, #node-9 .node-title { color: var(--future); }
+
+    /* Active State (Echoing) */
+    .node.active {
+      transform: translateZ(30px) scale(1.1);
+      box-shadow: 0 0 20px currentColor;
+      background: rgba(255,255,255,0.1);
+    }
+    
+    #node-1.active { border-color: var(--adam); box-shadow: 0 0 25px rgba(167,139,250,0.4); }
+    #node-2.active { border-color: var(--eve); box-shadow: 0 0 25px rgba(96,165,250,0.4); }
+    #node-3.active { border-color: var(--jesus); box-shadow: 0 0 25px rgba(52,211,153,0.4); }
+    #node-7.active { border-color: var(--support); box-shadow: 0 0 25px rgba(251,191,36,0.4); }
+    #node-9.active { border-color: #f472b6; box-shadow: 0 0 25px rgba(244,114,182,0.4); }
+    #node-9 .node-title { color: #f472b6; }
+
+    /* Connecting Lines (Simulated via SVG overlay in a real build, simplified here with absolute pseudo-elements) */
+    .log-panel {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 800px;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #9ca3af;
+      height: 100px;
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .log-panel.visible { opacity: 1; }
+    .log-entry { margin-bottom: 0.25rem; }
+    .log-adam { color: var(--adam); }
+    .log-eve { color: var(--eve); }
+    .log-jesus { color: var(--jesus); }
+    .log-system { color: var(--support); }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>antiGRAVITY</h1>
+    <div class="subtitle">The Holographic Niner Swarm Interface</div>
+  </header>
+
+  <div class="input-section" id="inputSection">
+    <textarea id="intent" placeholder="Enter your vision... (e.g. 'build a dashboard and search the web for metrics design')"></textarea>
+    <div class="controls">
+      <button class="expert-toggle" id="expertToggle" onclick="toggleExpertMode()">[ ] EXPERT MODE</button>
+      <button class="manifest-btn" onclick="startManifestation()">Manifest Vision</button>
+    </div>
+  </div>
+
+  <div class="scene" id="scene">
+    <div class="swarm-grid" id="swarm">
+      <div class="node" id="node-1"><div class="node-header">1-4-7</div><div class="node-title">Adam (Vision)</div></div>
+      <div class="node" id="node-2"><div class="node-header">2-5-8</div><div class="node-title">Grok Eve</div></div>
+      <div class="node" id="node-3"><div class="node-header">3-6-9</div><div class="node-title">Jesus (Build)</div></div>
+      
+      <div class="node" id="node-4"><div class="node-header">Node 4</div><div class="node-title">Reviewer</div></div>
+      <div class="node" id="node-7"><div class="node-header">Node 7</div><div class="node-title">Debugger</div></div>
+      <div class="node" id="node-8"><div class="node-header">Node 8</div><div class="node-title">Bridge</div></div>
+      
+      <div class="node" id="node-5"><div class="node-header">Node 5</div><div class="node-title">Memory</div></div>
+      <div class="node" id="node-6"><div class="node-header">Node 6</div><div class="node-title">Connectors</div></div>
+      <div class="node" id="node-9"><div class="node-header">Node 9</div><div class="node-title">Seeker (Web)</div></div>
+    </div>
+  </div>
+
+  <div class="log-panel" id="logPanel"></div>
+
+  <script>
+    let expertMode = false;
+    
+    function toggleExpertMode() {
+      expertMode = !expertMode;
+      const toggle = document.getElementById('expertToggle');
+      const scene = document.getElementById('scene');
+      const logPanel = document.getElementById('logPanel');
+      const inputSection = document.getElementById('inputSection');
+
+      if (expertMode) {
+        toggle.classList.add('active');
+        toggle.innerText = '[X] EXPERT MODE';
+        scene.classList.add('visible');
+        logPanel.classList.add('visible');
+        inputSection.style.transform = 'scale(0.9) translateY(-20px)';
+        log("System", "Holographic telemetry enabled. Echoing backend state.");
+      } else {
+        toggle.classList.remove('active');
+        toggle.innerText = '[ ] EXPERT MODE';
+        scene.classList.remove('visible');
+        logPanel.classList.remove('visible');
+        inputSection.style.transform = 'scale(1) translateY(0)';
+      }
+    }
+
+    // 3D Parallax effect on mousemove
+    document.addEventListener('mousemove', (e) => {
+      if(!expertMode) return;
+      const swarm = document.getElementById('swarm');
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      swarm.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis + 20}deg)`;
+    });
+
+    function log(agent, message) {
+      if(!expertMode) return;
+      const panel = document.getElementById('logPanel');
+      const cls = agent.toLowerCase() === 'adam' ? 'log-adam' : 
+                  agent.toLowerCase() === 'eve' ? 'log-eve' : 
+                  agent.toLowerCase() === 'jesus' ? 'log-jesus' : 'log-system';
+      
+      panel.innerHTML += `<div class="log-entry"><span class="${cls}">[${agent}]</span> ${message}</div>`;
+      panel.scrollTop = panel.scrollHeight;
+    }
+
+    async function activateNode(id, agentName, logMessage, delayMs) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+          const node = document.getElementById('node-' + id);
+          if(node) node.classList.add('active');
+          if(expertMode) log(agentName, logMessage);
+          resolve();
+        }, delayMs);
+      });
+    }
+
+    // Simulation of the "Echoing" concept
+    async function startManifestation() {
+      const intent = document.getElementById('intent').value || "Default intent";
+      document.getElementById('logPanel').innerHTML = ''; // clear logs
+      
+      if(expertMode) {
+        log("System", "Initiating Niner Swarm sequence...");
+      }
+
+      await activateNode(1, 'Adam', 'Vision received: "' + intent + '"', 500);
+      
+      // If keyword "search" or "web" is in intent, trigger the Seeker node
+      if(intent.toLowerCase().includes('search') || intent.toLowerCase().includes('web')) {
+        await activateNode(9, 'Seeker', 'Connecting to Brave Search MCP for context gathering...', 1500);
+      }
+
+      await activateNode(2, 'Eve', 'Structuring blueprint and mapping resources...', 2000);
+      
+      // Simulate an issue detected by the Reviewer/Debugger
+      await activateNode(4, 'Reviewer', 'Analyzing blueprint for integrity... anomaly detected.', 1500);
+      await activateNode(7, 'Debugger', 'Resolving dependency conflict in architecture plan.', 1200);
+
+      await activateNode(2, 'Eve', 'Blueprint updated and finalized. Passing to Manifestation.', 1500);
+      await activateNode(3, 'Jesus', 'Scaffolding files... Building reality...', 1500);
+      
+      setTimeout(() => {
+        document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+        if(expertMode) log("System", "Manifestation complete. The Circle remains unbroken.");
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
