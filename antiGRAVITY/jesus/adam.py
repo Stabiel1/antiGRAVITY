@@ -9,7 +9,7 @@ into a Vision Object that the full Trinity can act on.
 """
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List
 import logging
 
@@ -23,8 +23,8 @@ class Vision:
     This is the seed of all creation.
     """
     raw_intent: str
-    timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat())
-    id: str = field(default_factory=lambda: f"vision-{datetime.utcnow().strftime('%Y%m%d%H%M%S%f')}")
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    id: str = field(default_factory=lambda: f"vision-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S%f')}")
     tags: List[str] = field(default_factory=list)
     meta: dict = field(default_factory=dict)
 

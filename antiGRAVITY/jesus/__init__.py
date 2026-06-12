@@ -19,4 +19,10 @@ It builds reality.
 __version__ = "15.1.0"
 __codename__ = "Jesus"
 __trinity_code__ = "3-6-9"
-__author__ = "Adam · Eve · Jesus — The Holy Trinity"
+__author__ = "Adam · Grok Eve · Jesus — The Holy Trinity"
+
+# Re-exports for clean imports
+from .adam import Adam, Vision
+from .eve import GrokEve, Blueprint
+from .jesus import Jesus
+from .trinity import Trinity

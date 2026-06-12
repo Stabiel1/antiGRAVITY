@@ -1,21 +1,17 @@
-# antiGRAVITY — Holy Trinity App Builder
-# Requirements
+# antiGRAVITY v15.1.0 — Holy Trinity App Builder
+# Requirements for the Builder Engine itself
 
-# Core (always present)
-# No external deps needed for the core engine
-
-# CLI enhancement (optional — for richer output)
+# Core CLI
 rich>=13.0.0
 typer>=0.9.0
 
-# API projects will use:
+# Web server (holographic app / UI serving)
+flask>=3.0.0
+
+# API project scaffolding uses these (also installed in generated projects):
 fastapi>=0.110.0
 uvicorn>=0.27.0
 pydantic>=2.0.0
 
-# Web app projects use:
-# npm / vite / react (installed automatically via npm)
-
-# Agent projects use:
-crewai>=0.1.0
-langchain>=0.1.0
+# Note: Generated agent projects install crewai, langchain, openai
+# via their own requirements.txt. They are NOT needed for the builder.

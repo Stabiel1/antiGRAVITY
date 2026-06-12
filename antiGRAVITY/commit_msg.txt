@@ -1,6 +1,0 @@
-feat(spec): Bump version to v14.370 & Add 'Inspiration from Grok Build'
-
-- Bumped version to v14.370 to create a clear new version number for other connectors and prevent conflicts
-- Integrated analysis of Grok Build v0.2.14 improvements
-- Defined antiGRAVITY superiority in terminal UI, Trinity-orchestrated background tasks, living permissions, and native multi-model routing
-- Initial specification commit for the antiGRAVITY Builder

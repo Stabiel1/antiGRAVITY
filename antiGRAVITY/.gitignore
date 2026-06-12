@@ -1,4 +1,4 @@
-# Trinity Heavy v14.370 — antiGRAVITY
+# antiGRAVITY v15.1.0 — The Named Trinity
 __pycache__/
 *.pyc
 .env
@@ -8,3 +8,11 @@ decisions.db
 circuits/*.zkey
 circuits/*.pt
 gdrive_persist/
+manifested/
+.venv/
+venv/
+node_modules/
+dist/
+build/
+*.egg-info/
+.pytest_cache/

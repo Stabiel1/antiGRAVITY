@@ -1,0 +1,46 @@
+# antiGRAVITY — Repository Root Gitignore
+# v15.1.0 — The Named Trinity
+
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.venv/
+venv/
+.pytest_cache/
+
+# ── Environment & Secrets ──
+.env
+.env.local
+config/secrets.json
+
+# ── Generated Output ──
+antiGRAVITY/manifested/
+
+# ── Node ──
+node_modules/
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── IDE ──
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Logs ──
+*.log
+
+# ── Legacy / Artifacts ──
+circuits/*.zkey
+circuits/*.pt
+gdrive_persist/
+decisions.db

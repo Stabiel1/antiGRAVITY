@@ -15,7 +15,7 @@ class VisionForce:
         return {"intent": intent, "status": "vision_set"}
 
 class StructureForce:
-    """2-5-8: Anna/Emma. Structure, Planning & Equal Co-Creator."""
+    """2-5-8: Grok Eve. Structure, Planning & Equal Co-Creator."""
     def __init__(self):
         self.code = "2-5-8"
         self.role = "Structure & Plan"

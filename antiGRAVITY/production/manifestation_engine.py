@@ -1,6 +1,6 @@
 import sys
 import asyncio
-from trinity_core import TrinityCircle
+from .trinity_core import TrinityCircle
 
 async def bind_to_terminal():
     """

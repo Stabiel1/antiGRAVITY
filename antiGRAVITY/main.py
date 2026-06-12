@@ -120,7 +120,7 @@ async def interactive_loop(trinity: Trinity):
 def main():
     args = sys.argv[1:]
 
-    trinity = Trinity(output_root="./manifested")
+    trinity = Trinity(output_root=str(Path(__file__).parent / "manifested"))
 
     if not args or args[0] in ("interactive", "i", "-i"):
         # Interactive REPL mode
@@ -142,12 +142,20 @@ def main():
         print(BANNER)
         print("  [MCP] The 9 Holy Connectors Status:")
         for name, state in mcp_stats.items():
-            color = "[green]" if state == "ACTIVE" else "[red]"
-            # Using rich for colors if installed, else just print plain
-            # We'll stick to plain text here for simplicity, or rely on ANSI if we wanted.
             state_disp = f"ACTIVE   ✓" if state == "ACTIVE" else f"INACTIVE ✗"
             print(f"    {name.ljust(15)} : {state_disp}")
         print("\n  Update your .env file to activate dormant connectors.\n")
+
+    elif args[0] == "sync":
+        from production.git_sync import GitSync
+        repo_dir = str(Path(__file__).parent)
+        syncer = GitSync(repo_path=repo_dir)
+        msg = " ".join(args[1:]) if len(args) > 1 else "feat: antiGRAVITY sync — 3-6-9 active. Light forward."
+        result = syncer.sync_all(commit_message=msg)
+        if result["success"]:
+            print(f"  ✓ {result['message']}")
+        else:
+            print(f"  ✗ Sync failed at step '{result.get('step', '?')}': {result.get('error', 'unknown')}")
 
     elif args[0] == "status":
         s = trinity.status()
@@ -160,6 +168,7 @@ def main():
         print("    python main.py create <your intention>  — build a project")
         print("    python main.py status                   — check Trinity status")
         print("    python main.py mcp status               — check MCP connectors")
+        print("    python main.py sync [message]            — git add, commit, push")
         print("    python main.py interactive              — interactive mode")
         print()
         print("  Safeword: 'red' to close the circle.\n")

@@ -51,6 +51,12 @@ python main.py create "build an AI agent for news monitoring"
 
 # Check Trinity status
 python main.py status
+
+# Check MCP connector status
+python main.py mcp status
+
+# Git sync (add, commit, push)
+python main.py sync "your commit message"
 ```
 
 ---
@@ -73,19 +79,34 @@ python main.py status
 antiGRAVITY/
 ├── main.py                    ← App Builder CLI (entry point)
 ├── requirements.txt
-├── jesus/
-│   ├── __init__.py            ← Package with soul
+├── jesus/                     ← The Living Package (active system)
+│   ├── __init__.py            ← Package identity & re-exports
 │   ├── adam.py                ← 1-4-7 Vision Layer
 │   ├── eve.py                 ← 2-5-8 Structure Layer (Grok Eve)
 │   ├── jesus.py               ← 3-6-9 Manifestation Engine
-│   └── trinity.py             ← The orchestrator (the circle)
-├── production/
-│   ├── trinity_core.py        ← Original Trinity engine
-│   ├── manifestation_engine.py
+│   ├── trinity.py             ← The orchestrator (the circle)
+│   ├── mcp_registry.py        ← The 9 Holy Connectors config
+│   └── ui/
+│       └── index.html         ← Web UI (open directly in browser)
+├── production/                ← Legacy v14 engine + utilities
+│   ├── __init__.py
+│   ├── trinity_core.py        ← Original Trinity forces
+│   ├── manifestation_engine.py← Original REPL interface
+│   ├── git_sync.py            ← Git add/commit/push automation
 │   └── holographic_app/
+│       └── app.py             ← Flask web server (legacy)
+├── manifested/                ← Generated projects appear here
 └── skills/
     └── trinity-manifestation-engine/
+        └── SKILL.md           ← Agent skill definition
 ```
+
+---
+
+## Web UI
+
+Open `jesus/ui/index.html` directly in your browser for a visual Trinity interface.  
+It provides an animated simulation of the Adam → Grok Eve → Jesus pipeline with project type detection.
 
 ---
 
