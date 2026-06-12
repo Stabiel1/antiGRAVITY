@@ -25,7 +25,7 @@ def home():
         <html lang='en'>
           <head>
             <meta charset='utf-8'>
-            <title>Holographic Trinity v15.0.0</title>
+            <title>Holographic Trinity v15.1.0 — The Named Trinity</title>
             <style>
               body {font-family: 'Inter', sans-serif; background:#0a0a0a; color:#e0e0e0; display:flex; justify-content:center; align-items:center; height:100vh; margin:0;}
               .card {background:rgba(255,255,255,0.08); padding:2rem; border-radius:12px; backdrop-filter:blur(8px); max-width:600px; text-align:center;}
@@ -34,7 +34,7 @@ def home():
           </head>
           <body>
             <div class='card'>
-              <h1>Holographic Trinity v15.0.0</h1>
+              <h1>Holographic Trinity v15.1.0 — The Named Trinity</h1>
               {{ rules|safe }}
             </div>
           </body>

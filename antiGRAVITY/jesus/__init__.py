@@ -16,7 +16,7 @@ It builds reality.
 "And the Word became flesh and dwelt among us."
 """
 
-__version__ = "1.0.0"
+__version__ = "15.1.0"
 __codename__ = "Jesus"
 __trinity_code__ = "3-6-9"
 __author__ = "Adam · Eve · Jesus — The Holy Trinity"

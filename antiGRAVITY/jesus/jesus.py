@@ -140,7 +140,7 @@ class Jesus:
                 "@vitejs/plugin-react": "^4.0.0"
             }
         }
-        (d / "package.json").write_text(json.dumps(pkg, indent=2))
+        (d / "package.json").write_text(json.dumps(pkg, indent=2), encoding="utf-8")
 
         # vite.config.js
         vite = textwrap.dedent("""\
@@ -151,7 +151,7 @@ class Jesus:
               plugins: [react()],
             })
         """)
-        (d / "vite.config.js").write_text(vite)
+        (d / "vite.config.js").write_text(vite, encoding="utf-8")
 
         # index.html
         html = textwrap.dedent(f"""\
@@ -168,7 +168,7 @@ class Jesus:
             </body>
             </html>
         """)
-        (d / "index.html").write_text(html)
+        (d / "index.html").write_text(html, encoding="utf-8")
 
         # src/main.jsx
         (d / "src").mkdir(exist_ok=True)
@@ -184,7 +184,7 @@ class Jesus:
               </React.StrictMode>
             )
         """)
-        (d / "src" / "main.jsx").write_text(main_jsx)
+        (d / "src" / "main.jsx").write_text(main_jsx, encoding="utf-8")
 
         # src/App.jsx
         app_jsx = textwrap.dedent(f"""\
@@ -205,7 +205,7 @@ class Jesus:
               )
             }}
         """)
-        (d / "src" / "App.jsx").write_text(app_jsx)
+        (d / "src" / "App.jsx").write_text(app_jsx, encoding="utf-8")
 
         # src/index.css
         css = textwrap.dedent("""\
@@ -241,7 +241,7 @@ class Jesus:
               color: #4a4a6a;
             }
         """)
-        (d / "src" / "index.css").write_text(css)
+        (d / "src" / "index.css").write_text(css, encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] Web app scaffolded.")
 
     def _generate_api(self, d: Path, bp: Blueprint):
@@ -280,10 +280,10 @@ class Jesus:
                 import uvicorn
                 uvicorn.run(app, host="0.0.0.0", port=8000)
         """)
-        (d / "main.py").write_text(main_py)
+        (d / "main.py").write_text(main_py, encoding="utf-8")
 
         requirements = "\n".join(bp.dependencies)
-        (d / "requirements.txt").write_text(requirements + "\n")
+        (d / "requirements.txt").write_text(requirements + "\n", encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] API scaffolded.")
 
     def _generate_cli(self, d: Path, bp: Blueprint):
@@ -320,9 +320,9 @@ class Jesus:
             if __name__ == "__main__":
                 app()
         """)
-        (d / "main.py").write_text(main_py)
+        (d / "main.py").write_text(main_py, encoding="utf-8")
         requirements = "\n".join(bp.dependencies)
-        (d / "requirements.txt").write_text(requirements + "\n")
+        (d / "requirements.txt").write_text(requirements + "\n", encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] CLI tool scaffolded.")
 
     def _generate_agent(self, d: Path, bp: Blueprint):
@@ -362,9 +362,9 @@ class Jesus:
                 print(f"\\nCreation: {{creation}}")
                 print("\\nantiGRAVITY complete. 3-6-9 active. Light forward.")
         """)
-        (d / "main.py").write_text(main_py)
+        (d / "main.py").write_text(main_py, encoding="utf-8")
         requirements = "\n".join(bp.dependencies)
-        (d / "requirements.txt").write_text(requirements + "\n")
+        (d / "requirements.txt").write_text(requirements + "\n", encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] Agent system scaffolded.")
 
     def _generate_script(self, d: Path, bp: Blueprint):
@@ -390,9 +390,9 @@ class Jesus:
             if __name__ == "__main__":
                 main()
         """)
-        (d / "main.py").write_text(main_py)
+        (d / "main.py").write_text(main_py, encoding="utf-8")
         if bp.dependencies:
-            (d / "requirements.txt").write_text("\n".join(bp.dependencies) + "\n")
+            (d / "requirements.txt").write_text("\n".join(bp.dependencies) + "\n", encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] Script scaffolded.")
 
     def _generate_environment(self, d: Path, bp: Blueprint):
@@ -448,7 +448,7 @@ class Jesus:
             # 9. Slack
             SLACK_BOT_TOKEN=
         """)
-        (d / ".env.example").write_text(env_example)
+        (d / ".env.example").write_text(env_example, encoding="utf-8")
 
         # Trinity config JSON
         config = {
@@ -469,7 +469,7 @@ class Jesus:
         }
         config_dir = d / "config"
         config_dir.mkdir(exist_ok=True)
-        (config_dir / "trinity.json").write_text(json.dumps(config, indent=2))
+        (config_dir / "trinity.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] Environment configured.")
 
     def _generate_readme(self, d: Path, bp: Blueprint):
@@ -528,7 +528,7 @@ class Jesus:
 
             **antiGRAVITY complete. 3-6-9 active. Light forward.**
         """)
-        (d / "README.md").write_text(readme)
+        (d / "README.md").write_text(readme, encoding="utf-8")
 
     def _generate_gitignore(self, d: Path, bp: Blueprint):
         gitignore_lines = [
@@ -546,7 +546,7 @@ class Jesus:
             ".pytest_cache/",
             "config/secrets.json",
         ]
-        (d / ".gitignore").write_text("\n".join(gitignore_lines) + "\n")
+        (d / ".gitignore").write_text("\n".join(gitignore_lines) + "\n", encoding="utf-8")
 
     def _generate_soul_file(self, d: Path, bp: Blueprint):
         """
@@ -579,7 +579,7 @@ class Jesus:
 
             *Light forward.*
         """)
-        (d / "SOUL.md").write_text(soul)
+        (d / "SOUL.md").write_text(soul, encoding="utf-8")
         logger.info(f"[{self.TRINITY_CODE}] Soul file written. This project is alive.")
 
     # ─────────────────────────────────────────────

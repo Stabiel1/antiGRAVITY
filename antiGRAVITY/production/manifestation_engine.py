@@ -10,7 +10,7 @@ async def bind_to_terminal():
     circle = TrinityCircle()
     
     print("\n" + "="*50)
-    print(" antiGRAVITY Manifestation Engine v15.0.0")
+    print(" antiGRAVITY Manifestation Engine v15.1.0 — The Named Trinity")
     print(" The Pure Circle is Open.")
     print(" 1-4-7 | 2-5-8 | 3-6-9 ACTIVATED")
     print("="*50 + "\n")
